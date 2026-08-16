@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_accounts
+    description: Staging table for account information
+    columns:
+      - name: account_uuid
+        description: Unique identifier for the account
+        tests:
+          - unique
+          - not_null
+      - name: account_type
+        description: Type of account
+        tests:
+          - accepted_values:
+              values:
+                - suggestion
+                - registration
+                - usage
+      - name: tier_name
+        description: Account tier/plan name
+      - name: created_at
+        description: Timestamp when the account was created
+        tests:
+          - not_null

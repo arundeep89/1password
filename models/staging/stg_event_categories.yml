@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_event_categories
+    description: Staging table for event categorization with simplified funnel stage codes
+    columns:
+      - name: event_name
+        description: Name of the event
+        tests:
+          - unique
+          - not_null
+      - name: event_category
+        description: Category of the event (suggestion, registration, usage)
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - suggestion
+                - registration
+                - usage
+      - name: funnel_stage
+        description: Simplified funnel stage code (1a, 1b, 1c, 2a, 2b, 3a, 3b)
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - '1a'
+                - '1b'
+                - '1c'
+                - '2a'
+                - '2b'
+                - '3a'
+                - '3b'

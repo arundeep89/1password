@@ -1,0 +1,72 @@
+version: 2
+
+sources:
+  - name: events
+    description: "Raw event data from the events source system"
+    schema: raw
+    tables:
+      - name: events
+        description: "All events captured from account and user activity"
+        columns:
+          - name: event_id
+            description: "Unique identifier for the event"
+            dtype: varchar
+          - name: event_date
+            description: "Date component of when the event occurred (YYYY-MM-DD format)"
+            dtype: date
+          - name: event_at
+            description: "Full timestamp when the event occurred"
+            dtype: timestamp_tz
+          - name: account_uuid
+            description: "UUID identifier for the account"
+            dtype: varchar
+          - name: user_uuid
+            description: "UUID identifier for the user"
+            dtype: varchar
+          - name: event_name
+            description: "Name/type descriptor of the event"
+            accepted_values:
+              - "passkey-suggestion-shown"
+              - "passkey-suggestion-dismissed"
+              - "passkey-suggestion-accepted"
+              - "passkey-save-success"
+              - "passkey-save-failure_*"
+              - "passkey-fill-success"
+              - "passkey-fill-failure_*"
+  - name: accounts
+    description: "Account metadata including type and tier information"
+    schema: raw
+    tables:
+      - name: accounts
+        description: "Account records with type and tier details"
+        columns:
+          - name: account_uuid
+            description: "UUID identifier for the account"
+            dtype: varchar
+          - name: account_type
+            description: "Type of account (Business or Family)"
+            accepted_values:
+              - Business
+              - Family
+          - name: tier_name
+            description: "Tier name for the account (e.g., Premium, Free)"
+            dtype: varchar
+          - name: created_at
+            description: "Timestamp when the account was created"
+            dtype: timestamp_tz
+  - name: auth_users
+    description: "Users who authenticated and actively used the app on a given day"
+    schema: raw
+    tables:
+      - name: auth_users
+        description: "Daily record of users who authenticated and actively used the app"
+        columns:
+          - name: user_uuid
+            description: "UUID identifier for the user"
+            dtype: varchar
+          - name: account_uuid
+            description: "UUID identifier for the account"
+            dtype: varchar
+          - name: auth_date
+            description: "Date when the user authenticated and actively used the app (YYYY-MM-DD format)"
+            dtype: date

@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: fct_passkey_user_daily
+    description: Daily fact table capturing passkey activity metrics per user
+    meta:
+      grain: user_uuid + event_date
+    columns:
+      - name: user_uuid
+        description: Unique identifier for the user
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_passkey_user_milestones')
+              field: user_uuid
+      - name: event_date
+        description: Date of the activity
+        tests:
+          - not_null
+      - name: count_suggestions_shown
+        description: Count of passkey suggestion shown events on this day
+      - name: count_save_success
+        description: Count of passkey save success events on this day (deduplicated per hour)
+      - name: count_fill_success
+        description: Count of passkey fill success events on this day
+      - name: count_save_failure
+        description: Count of passkey save failure events on this day
+      - name: count_fill_failure
+        description: Count of passkey fill failure events on this day
+      - name: had_passkey_activity
+        description: Boolean flag indicating user had any passkey activity on this day
+      - name: is_passkey_active_user
+        description: Boolean flag indicating user had at least 1 fill success event on this day
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - user_uuid
+            - event_date

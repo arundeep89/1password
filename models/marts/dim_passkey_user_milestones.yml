@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: dim_passkey_user_milestones
+    description: Dimension table capturing user-level passkey adoption milestones and progression
+    meta:
+      grain: user_uuid
+    columns:
+      - name: user_uuid
+        description: Unique identifier for the user
+        tests:
+          - unique
+          - not_null
+      - name: first_suggestion_at
+        description: Timestamp of the first passkey suggestion shown to the user
+      - name: first_save_success_at
+        description: Timestamp of the first successful passkey save by the user (deduplicated)
+      - name: first_fill_success_at
+        description: Timestamp of the first successful passkey fill by the user
+      - name: days_suggestion_to_save
+        description: Number of days between first suggestion and first save (null if either milestone missing)
+      - name: days_save_to_first_fill
+        description: Number of days between first save and first fill (null if either milestone missing)
+      - name: has_ever_saved
+        description: Boolean flag indicating user has ever successfully saved a passkey
+      - name: has_ever_filled
+        description: Boolean flag indicating user has ever successfully filled with a passkey

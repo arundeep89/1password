@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: stg_events
+    description: Staging table for raw event data with 1:1 mapping from source
+    columns:
+      - name: event_id
+        description: Unique identifier for each event
+        tests:
+          - unique
+          - not_null
+      - name: event_date
+        description: Date of the event
+        tests:
+          - not_null
+      - name: event_at
+        description: Timestamp when the event occurred
+        tests:
+          - not_null
+      - name: account_uuid
+        description: UUID of the account associated with the event
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_accounts')
+              field: account_uuid
+      - name: user_uuid
+        description: UUID of the user who triggered the event
+        tests:
+          - not_null
+      - name: event_name
+        description: Name of the event (e.g., passkey-suggestion-shown, passkey-save-success)
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - passkey-suggestion-shown
+                - passkey-suggestion-dismissed
+                - passkey-suggestion-accepted
+                - passkey-save-success
+                - passkey-fill-success

@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_passkey_account_daily
+    description: Daily fact table capturing passkey activity metrics per account
+    meta:
+      grain: account_uuid + event_date
+    columns:
+      - name: event_date
+        description: Date of the activity
+        tests:
+          - not_null
+      - name: account_uuid
+        description: Unique identifier for the account
+        tests:
+          - not_null
+      - name: users_with_save_success
+        description: Count of distinct users who had save success events on this day
+      - name: users_with_fill_success
+        description: Count of distinct users who had fill success events on this day
+      - name: users_with_authentication
+        description: Count of distinct users who authenticated on this day
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - account_uuid
+            - event_date

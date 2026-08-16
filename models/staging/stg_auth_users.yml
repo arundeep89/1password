@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_auth_users
+    description: Staging table for user authentication data
+    columns:
+      - name: user_uuid
+        description: Unique identifier for the user
+        tests:
+          - not_null
+      - name: account_uuid
+        description: UUID of the account the user belongs to
+        tests:
+          - not_null
+      - name: auth_date
+        description: Date when the user authenticated
+        tests:
+          - not_null
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - user_uuid
+            - auth_date

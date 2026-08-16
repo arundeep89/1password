@@ -1,0 +1,8 @@
+event_name,event_category,funnel_stage
+passkey-suggestion-shown,suggestion,1 - top of funnel
+passkey-suggestion-dismissed,suggestion,1b - negative
+passkey-suggestion-accepted,suggestion,1c - intent
+passkey-save-success,registration,2 - converted
+passkey-save-failure_*,registration,2b - failed
+passkey-fill-success,usage,3 - active use
+passkey-fill-failure_*,usage,3b - failed

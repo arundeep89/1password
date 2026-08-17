@@ -57,8 +57,14 @@ The `int_events_deduped` model performs two critical data quality functions:
 ### Per-Day Metric Calculation
 All metrics are calculated "per day" not "ever" (cumulative). This applies to both user-level and account-level metrics, providing daily snapshots rather than cumulative totals.
 
-## `step_passkey_events`
+### `step_passkey_events`
 The exact model does not exist but intermdiate models perform similar operation
+
+### Syntax
+Some of the syntax is not validated. Eg: `data_tests` should be used in place of `tests`
+
+### Incremental
+Incremental approach was not looked into but could be used to reduce loading volume. For example, tables can use load date to only process new records per day using `insert_overwrite`, in cases where latest record is needed `merge` coould be used. For SCD type 2, `snapshots` on source could be used
 
 ## Questions
 1. Funnel: Of users who see a passkey suggestion, how many register (save) and how many

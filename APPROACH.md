@@ -57,6 +57,9 @@ The `int_events_deduped` model performs two critical data quality functions:
 ### Per-Day Metric Calculation
 All metrics are calculated "per day" not "ever" (cumulative). This applies to both user-level and account-level metrics, providing daily snapshots rather than cumulative totals.
 
+## `step_passkey_events`
+The exact model does not exist but intermdiate models perform similar operation
+
 ## Questions
 1. Funnel: Of users who see a passkey suggestion, how many register (save) and how many
 use (fill/autofill) passkeys successfully?
